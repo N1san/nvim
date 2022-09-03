@@ -1,0 +1,22 @@
+{
+  "diagnostic.displayByAle": true,
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls", ".ccls-root", "build/compile_commands.json", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        },
+        "compilationDatabaseDirectory": "build",
+        "clang": { 
+          "extraArgs": [ "-std=c++20" ] 
+        }
+      }
+    }
+  }
+}
