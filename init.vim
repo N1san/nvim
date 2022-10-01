@@ -12,15 +12,17 @@ if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
-let has_machine_specific_file = 1
-
-if empty(glob('~/.config/nvim/_machine_specific.vim'))
-    let has_machine_specific_file = 0
-    silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-source $HOME/.config/nvim/_machine_specific.vim
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+endif
 
 " Global Config
 syntax on
@@ -28,7 +30,7 @@ filetype on
 filetype plugin on
 filetype indent on
 
-"set clipboard=unnamedplus
+set clipboard+=unnamedplus
 let &t_ut=''
 set exrc
 set secure
@@ -138,7 +140,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'theniceboy/nvim-deus'
+" Plug 'theniceboy/nvim-deus'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
@@ -332,9 +335,17 @@ nnoremap tn :tabn<CR>
 nnoremap tp :tabp<CR>
 
 " nvim-deus
-set termguicolors
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-silent! color deus
+" set termguicolors
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" silent! color deus
+
+" palenight.vim
+set background=dark
+colorscheme palenight
+let g:airline_theme = "palenight"
+let g:palenight_terminal_italics=1
+
+" colorscheme dracula
 
 " vimtex
 let g:tex_flavor = 'latex'
